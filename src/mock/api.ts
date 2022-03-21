@@ -1,6 +1,6 @@
 import {delay} from "./utils/async";
 import dataBase, {DataBase, TEntity} from "./dataBase";
-import {EMethod, IApi, IConfig} from "../api/types";
+import {EMethod, IApi, IConfig} from "../services/types";
 
 export class Api implements IApi {
     private database: DataBase;
