@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {FC} from 'react';
+import {Routes, Route} from "react-router-dom";
+import {Layout} from "antd";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import HomePage from "./pages/HomePage/HomePage";
+import CallsPage from "./pages/CallsPage/CallsPage";
+import ChatsPage from "./pages/ChatsPage/ChatsPage";
+import EmailPage from "./pages/EmailsPage/EmailPage";
+import Header from "./components/Header/Header"
+import {routes} from "./routes/routes";
+// TODO: For test. Will remove
+import dataBase from "./mock/dataBase";
+
+const App: FC = () => {
+    console.log(dataBase)
+
+    return (
+        <Layout>
+            <Header />
+            <Layout.Content style={{minHeight: "650px", padding: "15px 25px"}}>
+                <Routes>
+                    <Route path={routes.homePage.path} element={<HomePage />} />
+                    <Route path={routes.callsPage.path} element={<CallsPage />} />
+                    <Route path={routes.chatsPage.path} element={<ChatsPage />} />
+                    <Route path={routes.emailsPage.path} element={<EmailPage />} />
+                </Routes>
+            </Layout.Content>
+        </Layout>
+    );
 }
+
+App.displayName = "App";
 
 export default App;
