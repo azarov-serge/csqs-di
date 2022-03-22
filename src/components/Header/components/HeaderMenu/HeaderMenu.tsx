@@ -29,7 +29,7 @@ const HeaderMenu = () => {
 
             <Menu.Item key={routes.emailsPage.path} icon={<MailOutlined />}>
                 <Link to={routes.emailsPage.path}>
-                    Emails
+                    E-mails
                 </Link>
             </Menu.Item>
         </Menu>

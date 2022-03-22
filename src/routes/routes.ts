@@ -1,8 +1,3 @@
-interface IRouteItem {
-    path: string;
-    name: string;
-}
-
 export const routes = {
     homePage: {
         path: "/",

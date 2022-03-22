@@ -1,4 +1,3 @@
-import {faker} from "@faker-js/faker";
 import {generateCalls, generateChats, generateCustomers, generateEmails, generateOperators} from "./utils/generateData";
 import {ICustomer, IOperator} from "../globalTypes";
 

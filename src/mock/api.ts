@@ -1,6 +1,6 @@
 import {delay} from "./utils/async";
 import dataBase, {DataBase, TEntity} from "./dataBase";
-import {EMethod, IApi, IConfig} from "../services/types";
+import {ERESTMethod, IApi, IRESTConfig} from "../api/types";
 
 export class Api implements IApi {
     private database: DataBase;
@@ -10,17 +10,17 @@ export class Api implements IApi {
     }
 
     request = async <T>(url: string, config = {}): Promise<T> => {
-        const {method = EMethod.GET} = config as IConfig;
-        const [entity] = url.split("/");
+        const {method = ERESTMethod.GET} = config as IRESTConfig;
+        const entity = url.replace("/", "");
         let result: any;
 
         switch (method) {
-            case EMethod.GET: {
+            case ERESTMethod.GET: {
                 result = this.database.getData(entity as TEntity)
             }
         }
 
-        await delay();
+        await delay(700);
 
         return result;
     }

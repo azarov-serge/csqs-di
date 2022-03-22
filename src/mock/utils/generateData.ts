@@ -20,7 +20,7 @@ export const generateCalls = (operators: IOperator[], customers: ICustomer[]): I
     id: faker.datatype.uuid(),
     rate: faker.random.arrayElement(rates),
     type: EEventType.CALLS,
-    duration: Number(new Date()) * Math.random(),
+    duration: 10_000_000 * Math.random(),
     operator: faker.random.arrayElement(operators),
     customer,
 }));
@@ -29,7 +29,7 @@ export const generateChats = (operators: IOperator[], customers: ICustomer[]): I
     id: faker.datatype.uuid(),
     rate: faker.random.arrayElement(rates),
     type: EEventType.CALLS,
-    duration: Number(new Date()) * Math.random(),
+    duration: 10_000_000 * Math.random(),
     operator: faker.random.arrayElement(operators),
     customer,
 }));

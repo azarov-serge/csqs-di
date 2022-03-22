@@ -1,3 +1,15 @@
+# About
+A test project for learning libraries:
+* inversify
+* inversify-react
+
+The first architecture uses:
+* react
+* redux
+* redux-saga
+
+Mock data was used for the project.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
