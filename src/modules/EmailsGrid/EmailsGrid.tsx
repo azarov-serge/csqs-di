@@ -15,7 +15,7 @@ const EmailsGrid: FC = () => {
 
     useEffect(() => {
         dispatch(actions.getEmails());
-    }, []);
+    }, [dispatch]);
 
     const status = useSelector(selectEmailsStatus);
     const error = useSelector(selectEmailsError);
@@ -30,10 +30,12 @@ const EmailsGrid: FC = () => {
 
 EmailsGrid.displayName = "EmailsGrid";
 
-export default () => {
+const EmailsGridModule = () => {
     return (
         <IocProvider container={container} store={store}>
             <EmailsGrid />
         </IocProvider>
     );
 };
+
+export default EmailsGridModule;

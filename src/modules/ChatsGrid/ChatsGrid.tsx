@@ -15,7 +15,7 @@ const ChatsGrid: FC = () => {
 
     useEffect(() => {
         dispatch(actions.getChats());
-    }, []);
+    }, [dispatch]);
 
     const status = useSelector(selectChatsStatus);
     const error = useSelector(selectChatsError);
@@ -30,10 +30,12 @@ const ChatsGrid: FC = () => {
 
 ChatsGrid.displayName = "ChatsGrid";
 
-export default () => {
+const ChatsGridModule = () => {
     return (
         <IocProvider container={container} store={store}>
             <ChatsGrid />
         </IocProvider>
     );
 };
+
+export default ChatsGridModule;
