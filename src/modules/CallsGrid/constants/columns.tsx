@@ -1,9 +1,9 @@
-import React, {Fragment} from "react";
-import {StarFilled} from "@ant-design/icons"
-import {v4 as uuid} from "uuid"
+import React from "react";
+import {v4 as uuid} from "uuid";
+import {StarFilled} from "@ant-design/icons";
 
-import {ICustomer, IOperator} from "../../../globalTypes";
 import {msToHMS} from "../../../utils/date";
+import {ICustomer, IOperator} from "../../../globalTypes";
 
 export const columns = [
     {

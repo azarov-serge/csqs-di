@@ -15,7 +15,7 @@ const CallsGrid: FC = () => {
 
     useEffect(() => {
         dispatch(actions.getCalls());
-    }, []);
+    }, [dispatch]);
 
     const status = useSelector(selectCallsStatus);
     const error = useSelector(selectCallsError);
@@ -30,11 +30,13 @@ const CallsGrid: FC = () => {
 
 CallsGrid.displayName = "CallsGrid";
 
-export default () => {
+const CallsGridModule = () => {
     return (
         <IocProvider container={container} store={store}>
             <CallsGrid />
         </IocProvider>
     );
 };
+
+export default CallsGridModule;
 

@@ -15,9 +15,9 @@ const App: FC = () => {
     console.log(dataBase)
 
     return (
-        <Layout>
+        <div>
             <Header />
-            <Layout.Content style={{minHeight: "650px", padding: "15px 25px"}}>
+            <Layout.Content style={{padding: "15px 25px"}}>
                 <Routes>
                     <Route path={routes.homePage.path} element={<HomePage />} />
                     <Route path={routes.callsPage.path} element={<CallsPage />} />
@@ -25,7 +25,7 @@ const App: FC = () => {
                     <Route path={routes.emailsPage.path} element={<EmailPage />} />
                 </Routes>
             </Layout.Content>
-        </Layout>
+        </div>
     );
 }
 
