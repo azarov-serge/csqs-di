@@ -5,10 +5,8 @@ import {Table} from "antd";
 import DataLoader from "../../components/DataLoader/DataLoader";
 import {actions} from "../../store/emails/slice";
 import {selectEmailsError, selectEmailsStatus, selectEmails} from "../../store/emails/selectors";
-import IocProvider from "../../ioc/IocProvider";
-import container from "../../containers/global.containers";
-import {store} from "../../store/store";
 import {columns} from "./constants/columns";
+import {EDataStatus} from "../../constants/loadData";
 
 const EmailsGrid: FC = () => {
     const dispatch = useDispatch();
@@ -22,7 +20,7 @@ const EmailsGrid: FC = () => {
     const emails = useSelector(selectEmails);
 
     return (
-        <DataLoader status={status} error={error}>
+        <DataLoader isFetching={status === EDataStatus.LOADING} isFetched={status === EDataStatus.SUCCESSED} error={error}>
             <Table columns={columns} dataSource={emails}/>
         </DataLoader>
     )
@@ -30,12 +28,4 @@ const EmailsGrid: FC = () => {
 
 EmailsGrid.displayName = "EmailsGrid";
 
-const EmailsGridModule = () => {
-    return (
-        <IocProvider container={container} store={store}>
-            <EmailsGrid />
-        </IocProvider>
-    );
-};
-
-export default EmailsGridModule;
+export default EmailsGrid;

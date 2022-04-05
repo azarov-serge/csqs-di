@@ -28,7 +28,7 @@ export const generateCalls = (operators: IOperator[], customers: ICustomer[]): I
 export const generateChats = (operators: IOperator[], customers: ICustomer[]): IChat[] => customers.map((customer) => ({
     id: faker.datatype.uuid(),
     rate: faker.random.arrayElement(rates),
-    type: EEventType.CALLS,
+    type: EEventType.CHATS,
     duration: 10_000_000 * Math.random(),
     operator: faker.random.arrayElement(operators),
     customer,
@@ -37,7 +37,7 @@ export const generateChats = (operators: IOperator[], customers: ICustomer[]): I
 export const generateEmails = (operators: IOperator[], customers: ICustomer[]): IEmail[] => customers.map((customer) => ({
     id: faker.datatype.uuid(),
     rate: faker.random.arrayElement(rates),
-    type: EEventType.CALLS,
+    type: EEventType.EMAILS,
     operator: faker.random.arrayElement(operators),
     customer,
 }));

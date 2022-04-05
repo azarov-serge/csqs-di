@@ -5,10 +5,8 @@ import {Table} from "antd";
 import DataLoader from "../../components/DataLoader/DataLoader";
 import {actions} from "../../store/chats/slice";
 import {selectChatsError, selectChatsStatus, selectChats} from "../../store/chats/selectors";
-import IocProvider from "../../ioc/IocProvider";
-import container from "../../containers/global.containers";
-import {store} from "../../store/store";
 import {columns} from "./constants/columns";
+import {EDataStatus} from "../../constants/loadData";
 
 const ChatsGrid: FC = () => {
     const dispatch = useDispatch();
@@ -22,7 +20,7 @@ const ChatsGrid: FC = () => {
     const chats = useSelector(selectChats);
 
     return (
-        <DataLoader status={status} error={error}>
+        <DataLoader isFetching={status === EDataStatus.LOADING} isFetched={status === EDataStatus.SUCCESSED}error={error}>
             <Table columns={columns} dataSource={chats}/>
         </DataLoader>
     )
@@ -30,12 +28,4 @@ const ChatsGrid: FC = () => {
 
 ChatsGrid.displayName = "ChatsGrid";
 
-const ChatsGridModule = () => {
-    return (
-        <IocProvider container={container} store={store}>
-            <ChatsGrid />
-        </IocProvider>
-    );
-};
-
-export default ChatsGridModule;
+export default ChatsGrid;

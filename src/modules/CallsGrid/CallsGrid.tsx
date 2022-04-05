@@ -1,42 +1,73 @@
-import React, {FC, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Table} from "antd";
+import "reflect-metadata";
+import React, { Component } from "react";
+import { resolve } from "inversify-react";
+import { Table } from "antd";
 
 import DataLoader from "../../components/DataLoader/DataLoader";
-import {actions} from "../../store/calls/slice";
-import {selectCallsError, selectCallsStatus, selectCalls} from "../../store/calls/selectors";
-import {columns} from "./constants/columns";
-import IocProvider from "../../ioc/IocProvider";
-import container from "../../containers/global.containers";
-import {store} from "../../store/store";
 
-const CallsGrid: FC = () => {
-    const dispatch = useDispatch();
+import { columns } from "./constants/columns";
+import { EDataStatus } from "../../constants/loadData";
+import { CallsService } from "../../services/CallsService";
+import { ICall } from "../../globalTypes";
 
-    useEffect(() => {
-        dispatch(actions.getCalls());
-    }, [dispatch]);
+interface CallsGridProp { }
+interface CallsGridState {
+    status: EDataStatus;
+    calls: ICall[]
+    error: string
+}
+class CallsGrid extends Component<CallsGridProp, CallsGridState> {
+    @resolve(CallsService)
+    private callsService!: CallsService;
+    
+    constructor(props: CallsGridProp) {
+        super(props);
 
-    const status = useSelector(selectCallsStatus);
-    const error = useSelector(selectCallsError);
-    const calls = useSelector(selectCalls);
+        this.state = {
+            status: EDataStatus.INITIALED,
+            calls: [],
+            error: "",
+        }
+    }
 
-    return (
-        <DataLoader status={status} error={error}>
-            <Table columns={columns} dataSource={calls}/>
-        </DataLoader>
-    )
+    componentDidMount = async (): Promise<void> => {
+        try {
+            this.setState((prevState) => {
+                return {
+                    ...prevState,
+                    status: EDataStatus.LOADING,
+                }
+            });
+
+            const calls = await this.callsService.getCalls();
+
+            this.setState((prevState) => {
+                return {
+                    ...prevState,
+                    status: EDataStatus.SUCCESSED,
+                    calls: calls.map((call: ICall) => ({key: call.id, ...call})),
+                }
+            });
+        } catch (error) {
+            this.setState((prevState) => {
+                return {
+                    ...prevState,
+                    status: EDataStatus.FAILED,
+                    error: String(error),
+                }
+            });
+        }
+    }
+
+    render = () => {
+        const { status, error, calls} = this.state;
+
+        return (
+            <DataLoader isFetching={status === EDataStatus.LOADING} isFetched={status === EDataStatus.SUCCESSED} error={error}>
+                <Table columns={columns} dataSource={calls} />
+            </DataLoader>
+        )
+    }
 };
 
-CallsGrid.displayName = "CallsGrid";
-
-const CallsGridModule = () => {
-    return (
-        <IocProvider container={container} store={store}>
-            <CallsGrid />
-        </IocProvider>
-    );
-};
-
-export default CallsGridModule;
-
+export default CallsGrid;

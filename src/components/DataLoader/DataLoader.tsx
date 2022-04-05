@@ -2,27 +2,42 @@ import React, {FC} from "react";
 import {Alert, Spin} from "antd";
 
 import {DataLoaderProps} from "./types";
-import {EDataStatus} from "../../constants/loadData";
 
 const DataLoader: FC<DataLoaderProps> = (props) => {
-    const {status, error = "", children} = props;
+    const {isFetching, isFetched, error = "", children} = props;
 
-    if (status === EDataStatus.FAILED) {
+    if ((Array.isArray(error) && error.length) || (error && !Array.isArray(error))) {
         return (
-            <Alert
-                type="error"
-                message="Error load data"
-                description={error}
-            />
+            <>
+                {Array.isArray(error) ?
+                    error.map((item) => (
+                        <Alert
+                            key={item}
+                            type="error"
+                            message="Error load data"
+                            description={error}
+                        />
+                    )) : (
+                        <Alert
+                            type="error"
+                            message="Error load data"
+                            description={error}
+                        />
+                    )}
+            </>
         );
     }
 
-    if(status === EDataStatus.LOADING) {
+    if (isFetching) {
         return (
             <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                <Spin size="large" />
+                <Spin size="large"/>
             </div>
         );
+    }
+
+    if (isFetched) {
+        return <>{children}</>;
     }
 
     return <>{children}</>;
