@@ -1,6 +1,5 @@
-import {EDataStatus} from "../../constants/loadData";
-
 export interface DataLoaderProps {
-    status: EDataStatus;
-    error?: string;
+    isFetching: boolean;
+    isFetched: boolean;
+    error?: string | string[];
 }
